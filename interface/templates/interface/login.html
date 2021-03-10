@@ -1,14 +1,27 @@
 {% extends "interface/generics/base.html" %}
 
 {% block body_content %}
-  <div class="container-fluid row">
-    <div class="col-md-6 offset-md-3">
-      <h1>vmchecker v2</h1>
-
+  <div class="container-fluid row" style="margin-top: 5%;">
+    <div class="col-md-6 offset-md-3" style="background-color: #4e5765; border-radius: 20px;">
+      <div class="d-flex justify-content-center" style="margin-top: 4%;">
+        <a href="{% url 'homepage' %}"><img width="500" height="100" src="/static/vmck.png"></a>
+      </div>
+      <h1 class="text-center" style="color: white; margin-top: 5%;">vmchecker v2</h1>
       <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Login</button>
+        <div style="margin: 2%;">
+          <h5 class="text-center" style="color: white;">Username</h5>
+          <div class="d-flex justify-content-center"> {{ form.username }} </div>
+        </div>
+
+        <div style="margin: 2%;">
+          <h5 class="text-center" style="color: white;">Password</h5>
+          <div class="d-flex justify-content-center"> {{ form.password }} </div>
+        </div>
+        
+        <div class="d-flex justify-content-center" style="margin: 3%;">
+          <button class="btn btn-primary" type="submit" style="background-color: #4ea95f; width: 15%; border-radius: 50px;">Login</button>
+        </div>
       </form>
     </div>
   </div>
