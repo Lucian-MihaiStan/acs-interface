@@ -1,30 +1,176 @@
 {% extends "interface/generics/base.html" %}
 
+<!-- added for sidebar -->
+{% block additional_styles %}
+
+
+
+<style>
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #6d7fcc;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+    color: #fff;
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #7386D5;
+    background: #fff;
+}
+
+#sidebar ul li.active > a, a[aria-expanded="true"] {
+    color: #fff;
+    background: #6d7fcc;
+}
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6d7fcc;
+}
+
+
+.wrapper {
+  display: flex;
+  width: 100%;
+}
+
+#sidebar {
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 999;
+  background: #7386D5;
+  color: #fff;
+  transition: all 0.3s;
+}
+
+
+
+</style>
+
+{% endblock %}
+
 {% block body_content %}
-  <div class="container">
-    <div class="btn-group" style="width: 100%;">
-      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 100%;">
-        Select course
-      </button>
 
-      <div class="dropdown-menu" style="width: 100%;">
-        {% for course in courses %}
-          <a class="dropdown-item" href="?course={{ course.id }}">{{ course.name }}</a>
-        {% endfor %}
+  <script>
+      $(document).ready(function () {
+
+  $("#sidebar").mCustomScrollbar({
+      theme: "minimal"
+  });
+
+  $('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active');
+  });
+
+  });
+
+  $(document).ready(function () {
+
+  $("#sidebar").mCustomScrollbar({
+      theme: "minimal"
+  });
+
+  $('#sidebarCollapse').on('click', function () {
+      // open or close navbar
+      $('#sidebar').toggleClass('active');
+      // close dropdowns
+      $('.collapse.in').toggleClass('in');
+      // and also adjust aria-expanded attributes we use for the open/closed arrows
+      // in our CSS
+      $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+  });
+
+  });
+  </script>
+
+  <div class="wrapper">
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <h3>VMChecker V2</h3>
       </div>
-    </div>
 
-    <ul>
-      {% for assignment in assignments %}
+
+      <ul class="list-unstyled components">
+        <p>Select course</p>
+        {% for course in courses %}
+          <li class="active">
+            <a data-toggle="collapse" aria-expanded="false" class="dropdown-toggle" href="?course={{ course.id }}">{{ course.name }}</a>
+            <ul class="collapse list-unstyled" id="homeSubmenu">
+              <li>
+                <a href="#" >Home1</a>
+              </li>
+              <li>
+                <a href="#" >Home2</a>
+              </li>
+              <li>
+                <a href="#" >Home3</a>
+              </li>
+            </ul>
+          </li>
+        {% endfor %}
+
         <li>
-          {{ assignment.name }}:
-          {% if assignment.is_active and assignment.assignment_on or assignment.is_active and user in assignment.course.teaching_assistants.all %}
-            <a href="{% url 'upload' assignment.course.pk assignment.pk %}">Upload</a>,
-          {% endif %}
-          <a href="{% url 'subs_for_assignment' assignment.course.pk assignment.pk %}">Results</a>
+          <a href="#">About</a>
         </li>
-      {% endfor %}
-    </ul>
+      </ul>
 
+    </nav>
+
+    <div id="content">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span>Toggle Sidebar</span>
+          </div>
+        </button>
+        <!-- <ul>
+          {% for assignment in assignments %}
+           <li>
+              {{ assignment.name }}:
+              {% if assignment.is_active and assignment.assignment_on or assignment.is_active and user in assignment.course.teaching_assistants.all %}
+                <a href="{% url 'upload' assignment.course.pk assignment.pk %}">Upload</a>,
+              {% endif %}
+              <a href="{% url 'subs_for_assignment' assignment.course.pk assignment.pk %}">Results</a>
+            </li>
+          {% endfor %}
+        </ul> -->
+      </nav>
+
+    </div>
   </div>
+
 {% endblock %}
