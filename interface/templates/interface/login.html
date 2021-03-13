@@ -1,26 +1,58 @@
 {% extends "interface/generics/base.html" %}
 
+{% block additional_styles %}
+
+<style>
+  .input-style input {
+    line-height: 2em;
+    width: 40%;
+
+    -webkit-appearance: textfield;
+    background-color: white;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    padding: 1px;
+    border-width: 2px;
+    border-style: inset; /* This rule adds the inset border */
+    border-color: initial;
+    border-image: initial;
+  }
+
+  .button-login {
+    background-color: #4ea95f; 
+    width: 20%; 
+    border-radius: 50px; 
+    font-weight: bold;
+    font-size: 150%;
+  }
+
+  h5 {
+    font-weight: bold;
+  }
+</style>
+
+{% endblock %}
+
 {% block body_content %}
   <div class="container-fluid row" style="margin-top: 5%;">
     <div class="col-md-6 offset-md-3" style="background-color: #4e5765; border-radius: 20px;">
-      <div class="d-flex justify-content-center" style="margin-top: 4%;">
-        <a href="{% url 'homepage' %}"><img width="500" height="100" src="/static/vmck.png"></a>
+      <div class="d-flex justify-content-center" style="margin-top: 5%;">
+        <a href="{% url 'homepage' %}"><img width="100%" height="150" style="align-content: center;" src="/static/vmck_update.png"></a>
       </div>
-      <h1 class="text-center" style="color: white; margin-top: 5%;">vmchecker v2</h1>
       <form method="post">
         {% csrf_token %}
         <div style="margin: 2%;">
           <h5 class="text-center" style="color: white;">Username</h5>
-          <div class="d-flex justify-content-center"> {{ form.username }} </div>
+          <div class="d-flex justify-content-center input-style"> {{ form.username }} </div>
         </div>
 
         <div style="margin: 2%;">
           <h5 class="text-center" style="color: white;">Password</h5>
-          <div class="d-flex justify-content-center"> {{ form.password }} </div>
+          <div class="d-flex justify-content-center input-style"> {{ form.password }} </div>
         </div>
         
         <div class="d-flex justify-content-center" style="margin: 3%;">
-          <button class="btn btn-primary" type="submit" style="background-color: #4ea95f; width: 15%; border-radius: 50px;">Login</button>
+          <button class="btn btn-primary button-login type="submit">Login</button>
         </div>
       </form>
     </div>
